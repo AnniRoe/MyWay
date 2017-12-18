@@ -1,9 +1,7 @@
 package com.example.madlo.mywaytest1;
 
+//TODO: Kommentare mit @author immer über die Overrides der entsprechenden Methoden/Funktionen schreiben
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -24,6 +22,7 @@ public class NavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback {
 
     private GoogleMap mMap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,14 +34,16 @@ public class NavigationDrawer extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        //Floating-Action Button auskommentiert weil unnötig
+        //TODO: Floating Action Buttton wenn sicher nicht gebraucht wird loeschen
+/*        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
         //Annika und Vicky
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -74,30 +75,32 @@ public class NavigationDrawer extends AppCompatActivity
         getMenuInflater().inflate(R.menu.navigation_drawer, menu);
         return true;
     }
-    //Annika und Vicky
-
+    /**
+     * @author Annika, Vicky
+     *  action bar item clicks here. The action bar will
+     *  automatically handle clicks on the Home/Up button, so long
+     *  as you specify a parent activity in AndroidManifest.xml
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
-    //Annika und Vicky
 
+    //Annika und Vicky
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        // TODO: Use Switch Case instead of if
+        // https://docs.oracle.com/javase/tutorial/java/nutsandbolts/switch.html
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
@@ -121,9 +124,10 @@ public class NavigationDrawer extends AppCompatActivity
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
+        // Adds a marker in Sydney and move the camera
+        //Hier was einfügen das standort ermittelt
         LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+        mMap.addMarker(new MarkerOptions().position(sydney).title("You are here"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
     //Annika und Vicky
