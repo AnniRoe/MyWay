@@ -58,7 +58,7 @@ public class NavigationDrawer extends AppCompatActivity
     private LocationRequest mLocationRequest;
     private String TAG = "Tag";
     private GoogleApiClient mGoogleApiClient;
-    public static final String TAG2 = MapsActivity.class.getSimpleName();
+    public static final String TAG2 = NavigationDrawer.class.getSimpleName();
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
 
 
