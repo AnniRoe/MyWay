@@ -46,6 +46,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class NavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -315,7 +318,6 @@ ADbuilder.show();
     @Override
     public void onLocationChanged(Location location) {
         handleNewLocation(location);
-
     }
 
     //Team Treehouse
@@ -324,9 +326,18 @@ ADbuilder.show();
         double currentLatitude = location.getLatitude();
         double currentLongitude = location.getLongitude();
         LatLng latLng = new LatLng(currentLatitude, currentLongitude);
-
         mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+
+        //ArrayList<LatLng> PositionsListe = new ArrayList<LatLng>();
+        addLatLngtoList(latLng);
     }
+
+    private List<LatLng> LatLngPosition;
+
+    //public List<LatLng> getLatLngPosition() {return LatLng};
+
+    public void addLatLngtoList (LatLng latLng) {LatLngPosition.add(latLng);}
+
 
     //Team Treehouse
     @Override
