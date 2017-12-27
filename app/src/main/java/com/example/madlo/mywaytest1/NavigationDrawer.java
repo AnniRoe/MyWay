@@ -138,6 +138,13 @@ public class NavigationDrawer extends AppCompatActivity
     private void startTracking() {
         trackingActive = true;
         trackingStartTime = System.currentTimeMillis();
+        // Remove old tracking
+
+        if (currentPolyLine != null) {
+            currentPolyLine.remove();
+        }
+        LatLngPosition.clear();
+
         PolylineOptions options = new PolylineOptions()
                 .width(5)
                 .color(Color.RED);
@@ -403,10 +410,7 @@ public class NavigationDrawer extends AppCompatActivity
         }
         //Team Treehouse
         Location location = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-        if (location == null) {
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
-
-        } else {
+        if (location != null) {
             handleNewLocation(location);
         }
     }
