@@ -49,6 +49,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
+
 public class NavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
@@ -69,6 +70,8 @@ public class NavigationDrawer extends AppCompatActivity
     final Handler polylineHandler = new Handler();
 
     private TextView resultTextView;
+    private TextView tActiveTextView;
+
 
     private List<LatLng> LatLngPosition = new ArrayList<>();
     private boolean trackingActive = false;
@@ -100,25 +103,42 @@ public class NavigationDrawer extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //Toast der auf Standortfreigabe hinweist
+        Context context = getApplicationContext();
+        CharSequence text = "Bitte stellen Sie sicher, dass Sie die Standortfreigabe für diese App unter 'Einstellungen' > 'Apps' aktiviert haben";
+        int duration = Toast.LENGTH_LONG;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
         resultTextView = (TextView) findViewById(R.id.text_view_tracking_result);
+
+
         final View startTrackingButton = findViewById(R.id.button_start_tracking);
         final View stopTrackingButton = findViewById(R.id.button_stop_tracking);
 
+
+
+        //Start Tracking Button ist nur sichtbar wenn nicht gerade getrackt wird
         startTrackingButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startTracking();
                 startTrackingButton.setVisibility(View.GONE);
                 stopTrackingButton.setVisibility(View.VISIBLE);
                 resultTextView.setVisibility(View.GONE);
+
             }
         });
 
+        //Stop Tracking Button ist nur sichtbar wenn gerade getrackt wird
         stopTrackingButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 stopTracking();
                 startTrackingButton.setVisibility(View.VISIBLE);
                 stopTrackingButton.setVisibility(View.GONE);
+
                 resultTextView.setVisibility(View.VISIBLE);
+
             }
         });
 
@@ -136,13 +156,30 @@ public class NavigationDrawer extends AppCompatActivity
 
     private void startTracking() {
         trackingActive = true;
-        trackingStartTime = System.currentTimeMillis();
-        // Remove old tracking
 
+        if (trackingActive) {
+            //Toast-Test - funktioniert
+            Context context = getApplicationContext();
+            CharSequence text = "Tracking ist aktiv";
+            int duration = Toast.LENGTH_LONG;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+
+            //TODO: SHOW TEXTVIEW IF TRACKING IS ACTIVE - OBACHT IST OBEN AUCH INITIALISIERT SOWIE IN activity_navigation_drawer.xml
+            //tActiveTextView = (TextView) findViewById(R.id.text_view_tracking_active);
+            //resultTextView.setVisibility(View.VISIBLE);
+        }
+
+        trackingStartTime = System.currentTimeMillis();
+
+        // Remove old tracking
         if (currentPolyLine != null) {
             currentPolyLine.remove();
         }
         LatLngPosition.clear();
+
+
 
         PolylineOptions options = new PolylineOptions()
                 .width(5)
@@ -159,7 +196,7 @@ public class NavigationDrawer extends AppCompatActivity
             }
         };
 
-        //nach 0,5s starten und jede sekunde abfragen
+        //nach 0,5s starten und alle 5 sekunden abfragen
         timer.schedule(timerTask, 500, 5000); //
     }
 
@@ -193,6 +230,18 @@ public class NavigationDrawer extends AppCompatActivity
     private void stopTracking() {
         // Deactivate data-collection in list
         trackingActive = false;
+
+        if (!trackingActive) {
+
+            //Toast-Test - funktioniert- zeigt nachricht wenn tracking deaktiviert wurde
+            Context context = getApplicationContext();
+            CharSequence text = "Tracking deaktiviert";
+            int duration = Toast.LENGTH_LONG;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();}
+
+
         trackingEndTime = System.currentTimeMillis();
         // Stop the timer
         if (timer != null) {
@@ -296,18 +345,46 @@ public class NavigationDrawer extends AppCompatActivity
         int id = item.getItemId();
 
 
+        //TODO: Toast mit Hinweis dass Navigation-Drawer-Symbol nicht geht erscheint nicht
         // Wenn der Drawer wieder funktioniert, diesen Toast entfernen und unten einkommentieren
         Context context = getApplicationContext();
-        int duration = Toast.LENGTH_SHORT;
+        int duration = Toast.LENGTH_LONG;
         Toast toast = Toast.makeText(context, "Diese Funktion ist noch nicht verfügbar", duration);
         toast.show();
 
 
+
+
+
 //        if (id == R.id.nav_position) {
+//
+//            int duration = Toast.LENGTH_SHORT;
+//            Context context2 = getApplicationContext();
+//            CharSequence text = "Diese Funktion ist noch nicht verfügbar";
+//
+//
+//            Toast toast = Toast.makeText(context2, text, duration);
+//            toast.show();
 //
 //        } else if (id == R.id.nav_means_of_transport) {
 //
+//            int duration = Toast.LENGTH_SHORT;
+//            Context context2 = getApplicationContext();
+//            CharSequence text = "Diese Funktion ist noch nicht verfügbar";
+//
+//
+//            Toast toast = Toast.makeText(context2, text, duration);
+//            toast.show();
+//
 //        } else if (id == R.id.nav_tracks) {
+//
+//            int duration = Toast.LENGTH_SHORT;
+//            Context context2 = getApplicationContext();
+//            CharSequence text = "Diese Funktion ist noch nicht verfügbar";
+//
+//
+//            Toast toast = Toast.makeText(context2, text, duration);
+//            toast.show();
 //
 //        }
 
@@ -352,6 +429,7 @@ public class NavigationDrawer extends AppCompatActivity
         double currentLongitude = location.getLongitude();
         LatLng latLng = new LatLng(currentLatitude, currentLongitude);
 
+        //Wenn Tracking aktiv ist oder die Länge der Positionsliste 0 ist fuege die neue Location hinzu
         if (trackingActive || LatLngPosition.size() == 0) {
             addLatLngtoList(latLng);
         }

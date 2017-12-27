@@ -15,4 +15,7 @@
     <string name="nav_position">Position</string>
     <string name="nav_means_of_transport">Means of Transport</string>
     <string name="nav_tracks">Tracks</string>
+    <string name="track_act">TRACKING AKTIV</string>
+    <string name="tracking_active">TRACKING IST AKTIV</string>
+
 </resources>

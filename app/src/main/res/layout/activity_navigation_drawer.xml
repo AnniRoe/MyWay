@@ -58,5 +58,21 @@
             android:paddingTop="10dp"
             android:text=""
             android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/text_view_tracking_active"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/button_stop_tracking"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="73dp"
+            android:background="#FFFF00"
+            android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/tracking_active"
+            android:visibility="gone" />
+
+
     </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>
