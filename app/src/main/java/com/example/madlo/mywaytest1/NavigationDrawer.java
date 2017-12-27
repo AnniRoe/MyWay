@@ -36,7 +36,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -201,7 +200,7 @@ public class NavigationDrawer extends AppCompatActivity
             timer = null;
             timerTask.cancel();
         }
-
+        polylineHandler.removeCallbacks(polylineRunnable);
 
         long trackingDuration = trackingEndTime - trackingStartTime;
         // MS in xx min und xx sec umwandeln
@@ -329,29 +328,9 @@ public class NavigationDrawer extends AppCompatActivity
         mGoogleApiClient.connect();
     }
 
-    //TEam Treehouse
-    private void setUpMap() {
-        mMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
-    }
-
-    private void startLocationUpdates() {
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            mFusedLocationClient.requestLocationUpdates(mLocationRequest,
-                    mLocationCallback,
-                    null /* Looper */);
-            mRequestingLocationUpdates = true;
-            return;
-        }
-        mFusedLocationClient.requestLocationUpdates(mLocationRequest,
-                mLocationCallback,
-                null /* Looper */);
-        mRequestingLocationUpdates = true;
-    }
-
     @Override
     protected void onPause() {
         super.onPause();
-        /**stopLocationUpdates();*/
         //Team Treehouse
         if (mGoogleApiClient.isConnected()) {
             LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
@@ -377,17 +356,8 @@ public class NavigationDrawer extends AppCompatActivity
             addLatLngtoList(latLng);
         }
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, DEFAULT_ZOOM_LEVEL));
-
-
-        Context context = getApplicationContext();
-        int duration = Toast.LENGTH_SHORT;
-        Toast toast = Toast.makeText(context, "Location received: " + location, duration);
-        toast.show();
-
     }
 
-
-    //public List<LatLng> getLatLngPosition() {return LatLng};
 
     public void addLatLngtoList(LatLng latLng) {
         LatLngPosition.add(latLng);
