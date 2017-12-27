@@ -10,4 +10,9 @@
     <string name="authors">von Annika, Madlon, Vicky</string>
     <string name="myWayCapitals">MY WAY</string>
     <string name="launcherIconQ">LauncherIconQ</string>
+    <string name="start_tracking">Tracking starten</string>
+    <string name="stop_tracking">Tracking beenden</string>
+    <string name="nav_position">Position</string>
+    <string name="nav_means_of_transport">Means of Transport</string>
+    <string name="nav_tracks">Tracks</string>
 </resources>
