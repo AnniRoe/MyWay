@@ -33,16 +33,15 @@
         <activity
             android:name=".NavigationDrawer"
             android:label="@string/app_name"
-            android:theme="@style/MyWay1.NoActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/MyWay1.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-
+        <activity android:name=".TransportSelectActivity"></activity>
     </application>
 
 </manifest>

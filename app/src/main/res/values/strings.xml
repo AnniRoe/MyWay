@@ -17,5 +17,10 @@
     <string name="nav_tracks">Tracks</string>
     <string name="track_act">TRACKING AKTIV</string>
     <string name="tracking_active">TRACKING IST AKTIV</string>
+    <string name="button_public_transport">ÖPNV</string>
+    <string name="button_car">Auto</string>
+    <string name="button_bike">Fahrrad</string>
+    <string name="button_walk">Zu Fuß</string>
+    <string name="transport_mode_choice">Verkehrsmittel wählen</string>
 
 </resources>

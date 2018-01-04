@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.madlo.mywaytest1.TransportSelectActivity">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:text="@string/transport_mode_choice"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/button_car"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_alignLeft="@+id/button_public_transport"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/button_public_transport"
+            android:layout_marginTop="100dp"
+            android:background="@mipmap/car_icon"
+            android:src="@mipmap/car_icon" />
+
+        <Button
+            android:id="@+id/button_public_transport"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_below="@+id/button_car"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:background="@mipmap/tram_icon"
+            android:src="@mipmap/tram_icon" />
+
+
+        <Button
+            android:id="@+id/button_bike"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_alignLeft="@+id/button_walk"
+            android:layout_alignStart="@+id/button_walk"
+            android:layout_below="@+id/button_walk"
+            android:layout_marginTop="25dp"
+            android:background="@mipmap/bike_icon"
+            android:src="@mipmap/bike_icon" />
+
+        <Button
+            android:id="@+id/button_walk"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:layout_alignLeft="@+id/button_public_transport"
+            android:layout_alignStart="@+id/button_public_transport"
+            android:layout_below="@+id/button_public_transport"
+            android:layout_marginTop="25dp"
+            android:background="@mipmap/pedestrian_icon"
+            android:src="@mipmap/pedestrian_icon" />
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

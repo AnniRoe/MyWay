@@ -2,6 +2,7 @@ package com.example.madlo.mywaytest1;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -27,15 +28,15 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationListener;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -54,14 +55,9 @@ public class NavigationDrawer extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnMapReadyCallback, LocationListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 222;
-    private static final String REQUESTING_LOCATION_UPDATES_KEY = "111";
     public static final float DEFAULT_ZOOM_LEVEL = 17.0f;
     private GoogleMap mMap;
-    private LocationCallback mLocationCallback;
-    private Boolean mRequestingLocationUpdates;
     private FusedLocationProviderClient mFusedLocationClient;
-    private LocationRequest mLocationRequest;
-    private String TAG = "Tag";
     private GoogleApiClient mGoogleApiClient;
     public static final String TAG2 = NavigationDrawer.class.getSimpleName();
     private final static int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9000;
@@ -70,7 +66,8 @@ public class NavigationDrawer extends AppCompatActivity
     final Handler polylineHandler = new Handler();
 
     private TextView resultTextView;
-    private TextView tActiveTextView;
+    private View startTrackingButton;
+    private View stopTrackingButton;
 
 
     private List<LatLng> LatLngPosition = new ArrayList<>();
@@ -78,6 +75,7 @@ public class NavigationDrawer extends AppCompatActivity
     private Polyline currentPolyLine;
     private long trackingStartTime;
     private long trackingEndTime;
+    private String transportChoice = "";
 
 
     @Override
@@ -104,7 +102,7 @@ public class NavigationDrawer extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         //Toast der auf Standortfreigabe hinweist
-        Context context = getApplicationContext();
+        final Context context = getApplicationContext();
         CharSequence text = "Bitte stellen Sie sicher, dass Sie die Standortfreigabe für diese App unter 'Einstellungen' > 'Apps' aktiviert haben";
         int duration = Toast.LENGTH_LONG;
 
@@ -114,21 +112,18 @@ public class NavigationDrawer extends AppCompatActivity
         resultTextView = (TextView) findViewById(R.id.text_view_tracking_result);
 
 
-        final View startTrackingButton = findViewById(R.id.button_start_tracking);
-        final View stopTrackingButton = findViewById(R.id.button_stop_tracking);
-
+        startTrackingButton = findViewById(R.id.button_start_tracking);
+        stopTrackingButton = findViewById(R.id.button_stop_tracking);
 
 
         //Start Tracking Button ist nur sichtbar wenn nicht gerade getrackt wird
         startTrackingButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                startTracking();
-                startTrackingButton.setVisibility(View.GONE);
-                stopTrackingButton.setVisibility(View.VISIBLE);
-                resultTextView.setVisibility(View.GONE);
-
+                Intent intent = new Intent(context, TransportSelectActivity.class);
+                startActivity(intent);
             }
         });
+
 
         //Stop Tracking Button ist nur sichtbar wenn gerade getrackt wird
         stopTrackingButton.setOnClickListener(new View.OnClickListener() {
@@ -136,7 +131,6 @@ public class NavigationDrawer extends AppCompatActivity
                 stopTracking();
                 startTrackingButton.setVisibility(View.VISIBLE);
                 stopTrackingButton.setVisibility(View.GONE);
-
                 resultTextView.setVisibility(View.VISIBLE);
 
             }
@@ -148,7 +142,7 @@ public class NavigationDrawer extends AppCompatActivity
                 .addApi(LocationServices.API)
                 .build();
 
-
+        // Wird benutzt um regelmäßig die letzte bekannte Location abzufragen (siehe:
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
     }
@@ -157,19 +151,20 @@ public class NavigationDrawer extends AppCompatActivity
     private void startTracking() {
         trackingActive = true;
 
-        if (trackingActive) {
-            //Toast-Test - funktioniert
-            Context context = getApplicationContext();
-            CharSequence text = "Tracking ist aktiv";
-            int duration = Toast.LENGTH_LONG;
+        startTrackingButton.setVisibility(View.GONE);
+        stopTrackingButton.setVisibility(View.VISIBLE);
+        resultTextView.setVisibility(View.GONE);
 
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();
+        //Toast-Test - funktioniert
+        Context context = getApplicationContext();
+        CharSequence text = "Tracking ist aktiv";
+        int duration = Toast.LENGTH_LONG;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
 
-            //TODO: SHOW TEXTVIEW IF TRACKING IS ACTIVE - OBACHT IST OBEN AUCH INITIALISIERT SOWIE IN activity_navigation_drawer.xml
-            //tActiveTextView = (TextView) findViewById(R.id.text_view_tracking_active);
-            //resultTextView.setVisibility(View.VISIBLE);
-        }
+        //TODO: SHOW TEXTVIEW IF TRACKING IS ACTIVE - OBACHT IST OBEN AUCH INITIALISIERT SOWIE IN activity_navigation_drawer.xml
+        //tActiveTextView = (TextView) findViewById(R.id.text_view_tracking_active);
+        //resultTextView.setVisibility(View.VISIBLE);
 
         trackingStartTime = System.currentTimeMillis();
 
@@ -180,16 +175,15 @@ public class NavigationDrawer extends AppCompatActivity
         LatLngPosition.clear();
 
 
-
         PolylineOptions options = new PolylineOptions()
-                .width(5)
-                .color(Color.RED);
+                .width(8)
+                .color(Color.YELLOW);
 
         currentPolyLine = mMap.addPolyline(options);
-        // neuer timer
+        // neuer timer (ist für die zeitsteuerung zuständig
         timer = new Timer();
 
-        //timer task starten
+        //timer task starten --- timertask sagt WAS zu tun ist
         timerTask = new TimerTask() {
             public void run() {
                 updatePolyLine();
@@ -206,7 +200,9 @@ public class NavigationDrawer extends AppCompatActivity
         polylineHandler.post(polylineRunnable);
     }
 
+    // Unterdrückt Warnung wegen fehlender Berechtigungen (die wir immer manuell setzen müssen)
     @SuppressLint("MissingPermission")
+    // internet: http://www.trivisonno.com/programming/update-android-gui-timer
     final Runnable polylineRunnable = new Runnable() {
         @Override
         public void run() {
@@ -230,16 +226,13 @@ public class NavigationDrawer extends AppCompatActivity
     private void stopTracking() {
         // Deactivate data-collection in list
         trackingActive = false;
+        //Toast-Test - funktioniert- zeigt nachricht wenn tracking deaktiviert wurde
+        Context context = getApplicationContext();
+        CharSequence text = "Tracking deaktiviert";
+        int duration = Toast.LENGTH_LONG;
 
-        if (!trackingActive) {
-
-            //Toast-Test - funktioniert- zeigt nachricht wenn tracking deaktiviert wurde
-            Context context = getApplicationContext();
-            CharSequence text = "Tracking deaktiviert";
-            int duration = Toast.LENGTH_LONG;
-
-            Toast toast = Toast.makeText(context, text, duration);
-            toast.show();}
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
 
 
         trackingEndTime = System.currentTimeMillis();
@@ -263,9 +256,26 @@ public class NavigationDrawer extends AppCompatActivity
         double distance = calculateTrackedDistance();
 
         String distanceString = "Distanz (Meter): " + String.format(Locale.GERMAN, "%.2f", distance);
-        String resultViewText = durationText + "\n" + distanceString;
+
+        String resultViewText = this.transportChoice + "\n" + durationText + "\n" + distanceString;
+
+        this.transportChoice = ""; // Remove old transport choice
 
         resultTextView.setText(resultViewText);
+
+        LatLng startPosition = LatLngPosition.get(0);
+        LatLng endPosition = LatLngPosition.get(LatLngPosition.size() - 1);
+
+        mMap.addMarker(new MarkerOptions()
+                .position(startPosition)
+                .title("Start")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+        );
+        mMap.addMarker(new MarkerOptions()
+                .position(endPosition)
+                .title("Ende")
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+        );
     }
 
     private double calculateTrackedDistance() {
@@ -299,10 +309,9 @@ public class NavigationDrawer extends AppCompatActivity
 
             }
 
-            // other 'case' lines to check for other
-            // permissions this app might request
         }
     }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -322,6 +331,8 @@ public class NavigationDrawer extends AppCompatActivity
     }
     //Annika und Vicky
 
+
+    // Müsste für den "settings"-Button sein
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -329,7 +340,6 @@ public class NavigationDrawer extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
@@ -338,53 +348,19 @@ public class NavigationDrawer extends AppCompatActivity
     }
     //Annika und Vicky
 
-    @SuppressWarnings("StatementWithEmptyBody")
+
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-
-
         //TODO: Toast mit Hinweis dass Navigation-Drawer-Symbol nicht geht erscheint nicht
         // Wenn der Drawer wieder funktioniert, diesen Toast entfernen und unten einkommentieren
-        Context context = getApplicationContext();
-        int duration = Toast.LENGTH_LONG;
-        Toast toast = Toast.makeText(context, "Diese Funktion ist noch nicht verfügbar", duration);
-        toast.show();
-
-
-
-
 
 //        if (id == R.id.nav_position) {
 //
-//            int duration = Toast.LENGTH_SHORT;
-//            Context context2 = getApplicationContext();
-//            CharSequence text = "Diese Funktion ist noch nicht verfügbar";
-//
-//
-//            Toast toast = Toast.makeText(context2, text, duration);
-//            toast.show();
-//
 //        } else if (id == R.id.nav_means_of_transport) {
 //
-//            int duration = Toast.LENGTH_SHORT;
-//            Context context2 = getApplicationContext();
-//            CharSequence text = "Diese Funktion ist noch nicht verfügbar";
-//
-//
-//            Toast toast = Toast.makeText(context2, text, duration);
-//            toast.show();
-//
 //        } else if (id == R.id.nav_tracks) {
-//
-//            int duration = Toast.LENGTH_SHORT;
-//            Context context2 = getApplicationContext();
-//            CharSequence text = "Diese Funktion ist noch nicht verfügbar";
-//
-//
-//            Toast toast = Toast.makeText(context2, text, duration);
-//            toast.show();
 //
 //        }
 
@@ -397,12 +373,22 @@ public class NavigationDrawer extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        /**if (mRequestingLocationUpdates) {
-         startLocationUpdates();
-         }*/
-        //Team Treehouse
-        //setUpMapIfNeeded();
         mGoogleApiClient.connect();
+
+        // Übergebene Daten, die vom Intent kommen
+        // Wir erwarten hier nur Daten von "TransportSelectActivity"
+        // Andere Intents müssen separat behandelt werden
+        // Schöner wäre es über KEY (wie in Übung 3)
+        Bundle parameters = getIntent().getExtras();
+        if (parameters != null) {
+            String transportChoice = parameters.getString("transport");
+            if (transportChoice != null && !transportChoice.isEmpty()) {
+                this.transportChoice = transportChoice;
+            }
+        }
+
+
+
     }
 
     @Override
@@ -447,13 +433,6 @@ public class NavigationDrawer extends AppCompatActivity
     public void onConnected(@Nullable Bundle bundle) {
         Log.i(TAG2, "Location services connected.");
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         //Team Treehouse
@@ -487,17 +466,13 @@ public class NavigationDrawer extends AppCompatActivity
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         mMap.setMyLocationEnabled(true);
-
+        // Erst hier wird das Tracking gestartet (wir müssen auf die Google-Map warten, sonst bekommen wir einen Fehler)
+        if (!transportChoice.isEmpty()) {
+            startTracking();
+        }
     }
 
 
