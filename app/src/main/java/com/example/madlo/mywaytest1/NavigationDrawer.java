@@ -200,12 +200,13 @@ public class NavigationDrawer extends AppCompatActivity
 
     // Unterdrückt Warnung wegen fehlender Berechtigungen (die wir immer manuell setzen müssen)
     //https://developer.android.com/reference/android/annotation/SuppressLint.html
-    @SuppressLint("MissingPermission")
+
     // internet: http://www.trivisonno.com/programming/update-android-gui-timer
     final Runnable polylineRunnable = new Runnable() {
         @Override
         public void run() {
             // aktuelle location holen
+            // Rot-Unterstrichenes geht trotzdem
             Task task = mFusedLocationClient.getLastLocation();
             task.addOnSuccessListener(new OnSuccessListener<Location>() {
                 @Override
