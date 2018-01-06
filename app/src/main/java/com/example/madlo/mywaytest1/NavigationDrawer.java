@@ -89,8 +89,6 @@ public class NavigationDrawer extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -163,10 +161,9 @@ public class NavigationDrawer extends AppCompatActivity
         toast.show();
 
 
-
         trackingStartTime = System.currentTimeMillis();
 
-        // Remove old tracking
+        // Altes Tracking entfernen
         if (currentPolyLine != null) {
             currentPolyLine.remove();
         }
@@ -193,13 +190,10 @@ public class NavigationDrawer extends AppCompatActivity
     }
 
 
-
     private void updatePolyLine() {
         polylineHandler.post(polylineRunnable);
     }
 
-    // Unterdrückt Warnung wegen fehlender Berechtigungen (die wir immer manuell setzen müssen)
-    //https://developer.android.com/reference/android/annotation/SuppressLint.html
 
     // internet: http://www.trivisonno.com/programming/update-android-gui-timer
     final Runnable polylineRunnable = new Runnable() {
@@ -224,7 +218,7 @@ public class NavigationDrawer extends AppCompatActivity
     };
 
     private void stopTracking() {
-        // Deaktiviert weiteres Vermekren von Daten in Liste
+        // Deaktiviert weiteres Vermerken von Daten in Liste
         trackingActive = false;
         //Toast zeigt Nachricht wenn Tracking deaktiviert wurde
         Context context = getApplicationContext();
@@ -267,7 +261,6 @@ public class NavigationDrawer extends AppCompatActivity
         //Marker an Anfang und Ende setzen
         LatLng startPosition = LatLngPosition.get(0);
         LatLng endPosition = LatLngPosition.get(LatLngPosition.size() - 1);
-
 
 
         mMap.addMarker(new MarkerOptions()
@@ -329,13 +322,11 @@ public class NavigationDrawer extends AppCompatActivity
     }
 
 
-
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.navigation_drawer, menu);
         return true;
     }
-
 
 
     // Müsste für den "settings"-Button sein, oben rechts
@@ -352,7 +343,6 @@ public class NavigationDrawer extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-
 
 
     @Override
@@ -390,7 +380,6 @@ public class NavigationDrawer extends AppCompatActivity
                 this.transportChoice = transportChoice;
             }
         }
-
 
 
     }
