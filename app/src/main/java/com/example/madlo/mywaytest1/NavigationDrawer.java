@@ -89,14 +89,14 @@ public class NavigationDrawer extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
-        //Annika und Vicky
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
-        //Annika und Vicky
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -223,9 +223,9 @@ public class NavigationDrawer extends AppCompatActivity
     };
 
     private void stopTracking() {
-        // Deactivate data-collection in list
+        // Deaktiviert weiteres Vermekren von Daten in Liste
         trackingActive = false;
-        //Toast-Test - funktioniert- zeigt nachricht wenn tracking deaktiviert wurde
+        //Toast zeigt Nachricht wenn Tracking deaktiviert wurde
         Context context = getApplicationContext();
         CharSequence text = "Tracking deaktiviert";
         int duration = Toast.LENGTH_LONG;
@@ -293,6 +293,8 @@ public class NavigationDrawer extends AppCompatActivity
     }
 
 
+    //Funktioniert nicht, muss umgangen werden und manuell unter Einstellungen
+    //Apps erlaubt werden für die App
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            String[] permissions, int[] grantResults) {
@@ -324,18 +326,18 @@ public class NavigationDrawer extends AppCompatActivity
             super.onBackPressed();
         }
     }
-    //Annika und Vicky
 
-    @Override
+
+
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.navigation_drawer, menu);
         return true;
     }
-    //Annika und Vicky
 
 
-    // Müsste für den "settings"-Button sein
+
+    // Müsste für den "settings"-Button sein, oben rechts
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -349,7 +351,7 @@ public class NavigationDrawer extends AppCompatActivity
 
         return super.onOptionsItemSelected(item);
     }
-    //Annika und Vicky
+
 
 
     @Override
@@ -357,7 +359,7 @@ public class NavigationDrawer extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         //TODO: Toast mit Hinweis dass Navigation-Drawer-Symbol nicht geht erscheint nicht
-        // Wenn der Drawer wieder funktioniert, diesen Toast entfernen und unten einkommentieren
+        // Wenn der Drawer wieder funktioniert, die folgenden Zeilen wieder aufnehmen
 
 //        if (id == R.id.nav_position) {
 //
@@ -372,16 +374,14 @@ public class NavigationDrawer extends AppCompatActivity
         return true;
     }
 
-    //Annika und Vicky
+
     @Override
     protected void onResume() {
         super.onResume();
         mGoogleApiClient.connect();
 
         // Übergebene Daten, die vom Intent kommen
-        // Wir erwarten hier nur Daten von "TransportSelectActivity"
-        // Andere Intents müssen separat behandelt werden
-        // Schöner wäre es über KEY (wie in Übung 3)
+        // Hier werden nur Daten von "TransportSelectActivity" angenommen wegen Schlagwort transport
         Bundle parameters = getIntent().getExtras();
         if (parameters != null) {
             String transportChoice = parameters.getString("transport");
