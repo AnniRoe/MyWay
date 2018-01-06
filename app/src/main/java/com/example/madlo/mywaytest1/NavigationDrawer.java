@@ -155,16 +155,14 @@ public class NavigationDrawer extends AppCompatActivity
         stopTrackingButton.setVisibility(View.VISIBLE);
         resultTextView.setVisibility(View.GONE);
 
-        //Toast-Test - funktioniert
+        //Toast für Hinweis dass Tracking aktiv ist
         Context context = getApplicationContext();
         CharSequence text = "Tracking ist aktiv";
         int duration = Toast.LENGTH_LONG;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
 
-        //TODO: SHOW TEXTVIEW IF TRACKING IS ACTIVE - OBACHT IST OBEN AUCH INITIALISIERT SOWIE IN activity_navigation_drawer.xml
-        //tActiveTextView = (TextView) findViewById(R.id.text_view_tracking_active);
-        //resultTextView.setVisibility(View.VISIBLE);
+
 
         trackingStartTime = System.currentTimeMillis();
 
@@ -176,8 +174,8 @@ public class NavigationDrawer extends AppCompatActivity
 
 
         PolylineOptions options = new PolylineOptions()
-                .width(8)
-                .color(Color.YELLOW);
+                .width(5)
+                .color(Color.RED);
 
         currentPolyLine = mMap.addPolyline(options);
         // neuer timer (ist für die zeitsteuerung zuständig
@@ -195,12 +193,13 @@ public class NavigationDrawer extends AppCompatActivity
     }
 
 
-    // internet: http://www.trivisonno.com/programming/update-android-gui-timer
+
     private void updatePolyLine() {
         polylineHandler.post(polylineRunnable);
     }
 
     // Unterdrückt Warnung wegen fehlender Berechtigungen (die wir immer manuell setzen müssen)
+    //https://developer.android.com/reference/android/annotation/SuppressLint.html
     @SuppressLint("MissingPermission")
     // internet: http://www.trivisonno.com/programming/update-android-gui-timer
     final Runnable polylineRunnable = new Runnable() {
@@ -259,22 +258,26 @@ public class NavigationDrawer extends AppCompatActivity
 
         String resultViewText = this.transportChoice + "\n" + durationText + "\n" + distanceString;
 
-        this.transportChoice = ""; // Remove old transport choice
+        this.transportChoice = ""; // Alte transportChoice wieder entfernen
 
+        //Zeigt eine Auswertung der getrackten Strecke
         resultTextView.setText(resultViewText);
 
+        //Marker an Anfang und Ende setzen
         LatLng startPosition = LatLngPosition.get(0);
         LatLng endPosition = LatLngPosition.get(LatLngPosition.size() - 1);
+
+
 
         mMap.addMarker(new MarkerOptions()
                 .position(startPosition)
                 .title("Start")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE))
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))
         );
         mMap.addMarker(new MarkerOptions()
                 .position(endPosition)
                 .title("Ende")
-                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED))
+                .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_YELLOW))
         );
     }
 

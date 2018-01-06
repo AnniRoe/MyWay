@@ -25,7 +25,7 @@ public class TransportSelectActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, NavigationDrawer.class);
-                intent.putExtra("transport", "car");
+                intent.putExtra("transport", "Mit dem Auto");
                 startActivity(intent);
             }
         });
@@ -35,7 +35,7 @@ public class TransportSelectActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent intent = new Intent(context, NavigationDrawer.class);
-                intent.putExtra("transport", "bike");
+                intent.putExtra("transport", "Mit dem Fahrrad");
                 startActivity(intent);
             }
         });
@@ -44,7 +44,7 @@ public class TransportSelectActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, NavigationDrawer.class);
-                intent.putExtra("transport", "walk");
+                intent.putExtra("transport", "Zu Fuß");
                 startActivity(intent);
             }
         });
@@ -53,7 +53,7 @@ public class TransportSelectActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, NavigationDrawer.class);
-                intent.putExtra("transport", "public");
+                intent.putExtra("transport", "Mit öffentlichen Verkehrsmitteln");
                 startActivity(intent);
             }
         });
