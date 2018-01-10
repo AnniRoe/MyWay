@@ -22,5 +22,11 @@
     <string name="button_bike">Fahrrad</string>
     <string name="button_walk">Zu Fuß</string>
     <string name="transport_mode_choice">Verkehrsmittel wählen</string>
+    <string name="transport_mode">Verkehrsmittel: </string>
+    <string name="duration">Dauer: </string>
+    <string name="distance">Distanz: </string>
+    <string name="date">Datum: </string>
+    <string name="track_number">Trackingnummer: </string>
+
 
 </resources>

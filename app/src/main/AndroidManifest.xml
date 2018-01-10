@@ -41,7 +41,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".TransportSelectActivity"></activity>
+        <activity android:name=".TransportSelectActivity" />
+        <activity android:name=".DetailedView"></activity>
     </application>
 
 </manifest>
