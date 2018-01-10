@@ -70,6 +70,9 @@ public class NavigationDrawer extends AppCompatActivity
     private TextView resultTextView;
     private View startTrackingButton;
     private View stopTrackingButton;
+    //TODO: Buttons einfügen und verknüpfen
+    private View saveTrackingButton;
+    private View showTrackingListButton;
 
 
     private List<LatLng> LatLngPosition = new ArrayList<>();
@@ -116,6 +119,7 @@ public class NavigationDrawer extends AppCompatActivity
 
         startTrackingButton = findViewById(R.id.button_start_tracking);
         stopTrackingButton = findViewById(R.id.button_stop_tracking);
+        saveTrackingButton = findViewById(R.id.button_Save);
 
 
         //Start Tracking Button ist nur sichtbar wenn nicht gerade getrackt wird
@@ -134,6 +138,15 @@ public class NavigationDrawer extends AppCompatActivity
                 startTrackingButton.setVisibility(View.VISIBLE);
                 stopTrackingButton.setVisibility(View.GONE);
                 resultTextView.setVisibility(View.VISIBLE);
+                saveTrackingButton.setVisibility(View.VISIBLE);
+
+            }
+        });
+
+        //SaveTrackingButton speichert das letzte Tracking nur nach beenden eines Trackings sichtbar
+        saveTrackingButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                TrackingEnded();
 
             }
         });
@@ -156,6 +169,7 @@ public class NavigationDrawer extends AppCompatActivity
         startTrackingButton.setVisibility(View.GONE);
         stopTrackingButton.setVisibility(View.VISIBLE);
         resultTextView.setVisibility(View.GONE);
+        saveTrackingButton.setVisibility(View.GONE);
 
         //Toast für Hinweis dass Tracking aktiv ist
         Context context = getApplicationContext();
@@ -289,6 +303,7 @@ public class NavigationDrawer extends AppCompatActivity
         }
 
         return distance;
+
     }
 
 
@@ -473,14 +488,13 @@ public class NavigationDrawer extends AppCompatActivity
         }
     }
 
-    public void onTrackingEnded(View v) {
+    public void TrackingEnded() {
 
         //Auslesen der Werte aus den Widgets
         //AUSSER TRANSPORTMITTEL DAS STEHT IN transportChoice
 
 
-
-        String distanceCast =  String.format(Locale.GERMAN, "%.2f", distance);
+        String distanceCast = String.format(Locale.GERMAN, "%.2f", distance);
 
 
         String date = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMAN).format(new Date());
@@ -509,7 +523,8 @@ public class NavigationDrawer extends AppCompatActivity
         Log.i("TAG", "Nutzer wurde hinzugefügt");
         Toast.makeText(NavigationDrawer.this, "Weg wurde hinzugefügt", Toast.LENGTH_SHORT).show();
 
-        finish();
+        //Braucht man folgendes?
+        //finish();
     }
 
 }

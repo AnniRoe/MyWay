@@ -75,6 +75,16 @@
             android:text="@string/tracking_active"
             android:visibility="gone" />
 
+        <Button
+            android:id="@+id/button_Save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_above="@+id/button_start_tracking"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="12dp"
+            android:text="Button" />
+
 
     </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>
