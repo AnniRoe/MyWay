@@ -12,7 +12,7 @@ import android.widget.ListView;
 
 public class ListActivity extends AppCompatActivity {
     WayListViewAdapter wayListViewAdapter;
-
+//TODO: neustes ganz oben anzeigen https://stackoverflow.com/questions/9987402/is-it-possible-to-make-a-listview-populate-from-the-bottom versucht aber keine ahnung wegen chaos
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,18 +26,7 @@ public class ListActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-
-                Intent intent = new Intent(ListActivity.this, NavigationDrawer.class);
-                startActivity(intent);
-                //Notiz an mich: Bisher kein KEY deshalb kein putExtra
-
-            }
-        });
         //This steht in der runden Klammer fuer den Context der Main
         wayListViewAdapter = new WayListViewAdapter(this, WayData.getInstance().getWaysList());
 

@@ -19,7 +19,7 @@ public class DetailedView extends AppCompatActivity {
         setContentView(R.layout.activity_detailed_view);
         final int position = getIntent().getIntExtra("POSITION", 0);
 
-//TODO: RAUSFINDEN WARUM IM LAYOUT ALLES KOMISCH VERSCHOBEN IST
+
 
         //TODO: KARTE IM DETAILEDVIEW ANZEIGEN
 

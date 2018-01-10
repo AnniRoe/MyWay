@@ -26,16 +26,18 @@
         android:layout_alignStart="@+id/textView_TransportTag"
         android:layout_below="@+id/textView_TransportTag"
         android:layout_marginTop="10dp"
-        android:textAlignment="textStart" />
+        android:textAlignment="textStart"
+        android:gravity="start"
+        android:layout_alignLeft="@+id/textView_TransportTag" />
 
     <TextView
         android:id="@+id/textView_DurationTag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView_TransportField"
-        android:layout_marginTop="28dp"
-        android:layout_toEndOf="@+id/textView_DurationField"
-        android:layout_toRightOf="@+id/textView_DurationField"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="19dp"
+        android:layout_marginStart="19dp"
         android:text="@string/duration"
         android:textColor="@color/colorPrimaryDark" />
 
@@ -46,16 +48,18 @@
         android:layout_marginTop="10dp"
         android:textAlignment="textStart"
         android:layout_below="@+id/textView_DurationTag"
-        android:layout_alignStart="@+id/textView_DistanceTag" />
+        android:layout_alignStart="@+id/textView_DistanceTag"
+        android:layout_alignLeft="@+id/textView_DistanceTag"
+        android:gravity="start" />
 
     <TextView
         android:id="@+id/textView_DistanceTag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView_DurationField"
-        android:layout_marginTop="27dp"
-        android:layout_toEndOf="@+id/textView_TransportField"
-        android:layout_toRightOf="@+id/textView_TransportField"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="19dp"
+        android:layout_marginStart="19dp"
         android:text="@string/distance"
         android:textColor="@color/colorPrimaryDark" />
 
@@ -66,16 +70,18 @@
         android:layout_marginTop="10dp"
         android:textAlignment="textStart"
         android:layout_below="@+id/textView_DistanceTag"
-        android:layout_alignStart="@+id/textView_DurationField" />
+        android:layout_alignStart="@+id/textView_DurationField"
+        android:layout_alignLeft="@+id/textView_DurationField"
+        android:gravity="start" />
 
     <TextView
         android:id="@+id/textView_DateTag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView_DistanceField"
-        android:layout_marginTop="31dp"
-        android:layout_toEndOf="@+id/textView_DateField"
-        android:layout_toRightOf="@+id/textView_DateField"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="19dp"
+        android:layout_marginStart="19dp"
         android:text="@string/date"
         android:textColor="@color/colorPrimaryDark" />
 
@@ -86,16 +92,18 @@
         android:layout_marginTop="10dp"
         android:textAlignment="textStart"
         android:layout_below="@+id/textView_DateTag"
-        android:layout_alignStart="@+id/textView_DistanceField" />
+        android:layout_alignStart="@+id/textView_DistanceField"
+        android:layout_alignLeft="@+id/textView_DistanceField"
+        android:gravity="start" />
 
     <TextView
         android:id="@+id/textView_TrackNumberTag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/textView_DateField"
-        android:layout_marginTop="29dp"
-        android:layout_toEndOf="@+id/textView_TrackNumberField"
-        android:layout_toRightOf="@+id/textView_TrackNumberField"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="19dp"
+        android:layout_marginStart="19dp"
         android:text="@string/track_number"
         android:textColor="@color/colorPrimaryDark" />
 
@@ -106,7 +114,9 @@
         android:layout_marginTop="10dp"
         android:textAlignment="textStart"
         android:layout_below="@+id/textView_TrackNumberTag"
-        android:layout_alignStart="@+id/textView_DateField" />
+        android:layout_alignStart="@+id/textView_DateField"
+        android:gravity="start"
+        android:layout_alignLeft="@+id/textView_DateField" />
 
 
 </RelativeLayout>

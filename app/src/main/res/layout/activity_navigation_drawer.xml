@@ -31,21 +31,26 @@
 
         <Button
             android:id="@+id/button_start_tracking"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="165dp"
+            android:layout_height="65dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:text="@string/start_tracking" />
+            android:background="#546e7a"
+            android:elevation="16dp"
+            android:text="@string/start_tracking"
+            android:textColor="#FFFF00"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/button_stop_tracking"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone"
-            android:background="#FFFF00"
+            android:layout_width="165dp"
+            android:layout_height="65dp"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:text="@string/stop_tracking" />
+            android:background="#FFFF00"
+            android:text="@string/stop_tracking"
+            android:textSize="18sp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/text_view_tracking_result"
@@ -77,23 +82,23 @@
 
         <Button
             android:id="@+id/button_Save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
             android:layout_above="@+id/button_start_tracking"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="12dp"
-            android:text="@string/save"
+            android:layout_marginBottom="9dp"
+            android:background="@mipmap/save_button"
+
             android:visibility="gone" />
 
         <Button
             android:id="@+id/button_showList"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:layout_alignParentBottom="true"
-            android:background="#FFFF00"
-            android:layout_toRightOf="@+id/button_start_tracking"
-            android:layout_toEndOf="@+id/button_start_tracking"
-            android:text="@string/show_list" />
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:background="@mipmap/trackings_button"
+            android:layout_marginLeft="305dp"
+            android:layout_marginStart="305dp"
+            android:layout_alignParentBottom="true" />
 
 
     </RelativeLayout>

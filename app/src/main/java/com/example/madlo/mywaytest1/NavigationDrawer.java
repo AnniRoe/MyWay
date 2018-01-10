@@ -2,6 +2,7 @@ package com.example.madlo.mywaytest1;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
@@ -16,6 +17,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -83,7 +85,7 @@ public class NavigationDrawer extends AppCompatActivity
     private String convertedTime;
     private double distance;
 
-
+//TODO: BUTTONS MIT HÖHERER AUFLÖSUNG VERWENDEN
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,6 +107,9 @@ public class NavigationDrawer extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        //TODO: NUR WENN TRANSPORTCHOICE NOCH LEER IST SOLL TOAST KOMMEN - SOLL VERHINDERN DASS TOAST NACH VERKEHRSMITTELWAHL NOCHEINMAL KOMMT
+        //if (transportChoice.isEmpty()) {
+
         //Toast der auf Standortfreigabe hinweist
         final Context context = getApplicationContext();
         CharSequence text = "Bitte stellen Sie sicher, dass Sie die Standortfreigabe für diese App unter 'Einstellungen' > 'Apps' aktiviert haben";
@@ -112,6 +117,7 @@ public class NavigationDrawer extends AppCompatActivity
 
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+        //}
 
         resultTextView = (TextView) findViewById(R.id.text_view_tracking_result);
 
@@ -125,7 +131,9 @@ public class NavigationDrawer extends AppCompatActivity
         //Start Tracking Button ist nur sichtbar wenn nicht gerade getrackt wird
         startTrackingButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(context, TransportSelectActivity.class);
+                //TODO: HOLT SICH HIER SCHON TRANSPORT CHOICE BEVOR WIEDER GELÖSCHT WIRD
+                transportChoice = ""; // Alte transportChoice wieder entfernen
+                Intent intent = new Intent(NavigationDrawer.this, TransportSelectActivity.class);
                 startActivity(intent);
             }
         });
@@ -142,10 +150,32 @@ public class NavigationDrawer extends AppCompatActivity
 
             }
         });
-//TODO:SPEICHERN MIT DIALOG
+//TODO:SPEICHERN MIT DIALOG Versuch auskommentiert weil app stoppt und ploetzlich bei VerkehrsmittelwahlActivity weiter geht
         //SaveTrackingButton speichert das letzte Tracking nur nach beenden eines Trackings sichtbar
         saveTrackingButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+
+//                //https://stackoverflow.com/questions/2478517/how-to-display-a-yes-no-dialog-box-on-android
+//                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        switch (which){
+//                            case DialogInterface.BUTTON_POSITIVE:
+//                                //Yes button clicked
+//                                TrackingEnded();
+//                                break;
+//
+//                            case DialogInterface.BUTTON_NEGATIVE:
+//                                //No button clicked
+//                                break;
+//                        }
+//                    }
+//                };
+//
+//                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//                builder.setMessage("Tracking speichern").setPositiveButton("Ja", dialogClickListener).setNegativeButton("Nein", dialogClickListener).show();
+//
+
                 TrackingEnded();
 
             }
@@ -283,7 +313,8 @@ public class NavigationDrawer extends AppCompatActivity
 
         String resultViewText = this.transportChoice + "\n" + durationText + "\n" + distanceString;
 
-        this.transportChoice = ""; // Alte transportChoice wieder entfernen
+        //TODO: transportChoice wird hier gelöscht und ist deswegen in TrackingEnded-Methode nicht mehr verfügbar
+        //this.transportChoice = ""; // Alte transportChoice wieder entfernen
 
         //Zeigt eine Auswertung der getrackten Strecke
         resultTextView.setText(resultViewText);
@@ -508,7 +539,7 @@ public class NavigationDrawer extends AppCompatActivity
         String distanceCast = String.format(Locale.GERMAN, "%.2f", distance);
 
 
-        String date = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMAN).format(new Date());
+        String date = new SimpleDateFormat("dd/MM/yyyy", Locale.GERMAN).format(new Date());
 
         // Tracknummer basteln
         String trackNumber = date + System.currentTimeMillis();
@@ -535,7 +566,7 @@ public class NavigationDrawer extends AppCompatActivity
         Log.i("TAG", "Nutzer wurde hinzugefügt");
         Toast.makeText(NavigationDrawer.this, "Weg wurde hinzugefügt", Toast.LENGTH_SHORT).show();
 
-        //Braucht man folgendes?
+
         //finish();
     }
 
