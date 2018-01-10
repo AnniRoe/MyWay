@@ -43,7 +43,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.maps.android.SphericalUtil;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
@@ -76,6 +78,8 @@ public class NavigationDrawer extends AppCompatActivity
     private long trackingStartTime;
     private long trackingEndTime;
     private String transportChoice = "";
+    private String convertedTime;
+    private double distance;
 
 
     @Override
@@ -178,7 +182,7 @@ public class NavigationDrawer extends AppCompatActivity
         // neuer timer (ist für die zeitsteuerung zuständig
         timer = new Timer();
 
-        //timer task starten --- timertask sagt WAS zu tun ist
+        //timer task starten --- timertask sagt WAS es alle 5 Sekunden tun soll
         timerTask = new TimerTask() {
             public void run() {
                 updatePolyLine();
@@ -240,14 +244,15 @@ public class NavigationDrawer extends AppCompatActivity
 
         long trackingDuration = trackingEndTime - trackingStartTime;
         // MS in xx min und xx sec umwandeln
-        String convertedTime = String.format(Locale.GERMAN, "%d min, %d sec",
+        //String oben initialisiert und hier vor converted String entfernt
+        convertedTime = String.format(Locale.GERMAN, "%d min, %d sec",
                 TimeUnit.MILLISECONDS.toMinutes(trackingDuration),
                 TimeUnit.MILLISECONDS.toSeconds(trackingDuration) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(trackingDuration))
         );
         String durationText = "Dauer: " + convertedTime;
 
         // Streckenberechnung
-        double distance = calculateTrackedDistance();
+        distance = calculateTrackedDistance();
 
         String distanceString = "Distanz (Meter): " + String.format(Locale.GERMAN, "%.2f", distance);
 
@@ -468,5 +473,43 @@ public class NavigationDrawer extends AppCompatActivity
         }
     }
 
+    public void onTrackingEnded(View v) {
+
+        //Auslesen der Werte aus den Widgets
+        //AUSSER TRANSPORTMITTEL DAS STEHT IN transportChoice
+
+
+
+        String distanceCast =  String.format(Locale.GERMAN, "%.2f", distance);
+
+
+        String date = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMAN).format(new Date());
+
+        // Tracknummer basteln
+        String trackNumber = date + System.currentTimeMillis();
+
+        //WERTE EINTRAGEN
+        //String tracknumber = DATE+UHRZEIT;
+
+        //Neues User-Objekt erzeugen
+        Ways ways = new Ways();
+
+        ways.setTransport(transportChoice);
+        ways.setDuration(convertedTime);
+        ways.setDistance(distanceCast);
+        ways.setDate(date);
+        ways.setTrackingNumber(trackNumber);
+
+        //Erzeugtes User-Objekt der User Liste in der User Data Klasse hinzufuegen mittels eigenerstellter Methode
+        WayData.getInstance().addWayToList(ways);
+
+        DbHelper.getInstance(NavigationDrawer.this).saveWay(ways);
+
+        //Naechste Zeilen benoetigt man für den Toast
+        Log.i("TAG", "Nutzer wurde hinzugefügt");
+        Toast.makeText(NavigationDrawer.this, "Weg wurde hinzugefügt", Toast.LENGTH_SHORT).show();
+
+        finish();
+    }
 
 }
