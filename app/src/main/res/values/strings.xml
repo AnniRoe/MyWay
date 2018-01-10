@@ -27,6 +27,7 @@
     <string name="distance">Distanz: </string>
     <string name="date">Datum: </string>
     <string name="track_number">Trackingnummer: </string>
+    <string name="title_activity_list">ListActivity</string>
 
 
 </resources>
