@@ -17,15 +17,18 @@ public class DetailedView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detailed_view);
-        final int position = getIntent().getIntExtra("POSITION",0);
+        final int position = getIntent().getIntExtra("POSITION", 0);
 
+//TODO: RAUSFINDEN WARUM IM LAYOUT ALLES KOMISCH VERSCHOBEN IST
+
+        //TODO: KARTE IM DETAILEDVIEW ANZEIGEN
 
         //Holt sich die UserList bzw erstellt eine Instanz dieser
-        List<Ways> userList4 = WayData.getInstance().getWaysList();
+        List<Ways> waysList4 = WayData.getInstance().getWaysList();
 
         //Holt sich Position des users in der liste
-        //TODO:FINDE userList4
-        Ways ways = userList4.get(position);
+
+        Ways ways = waysList4.get(position);
 
         //Holt sich den Namen zuerst und traegt ihn dann ins entsprechende Feld ein
         //Je fuer die einzelnen Daten

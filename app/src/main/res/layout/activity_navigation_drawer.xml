@@ -79,11 +79,21 @@
             android:id="@+id/button_Save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
             android:layout_above="@+id/button_start_tracking"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="12dp"
-            android:text="Button" />
+            android:text="@string/save"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/button_showList"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:layout_alignParentBottom="true"
+            android:background="#FFFF00"
+            android:layout_toRightOf="@+id/button_start_tracking"
+            android:layout_toEndOf="@+id/button_start_tracking"
+            android:text="@string/show_list" />
 
 
     </RelativeLayout>

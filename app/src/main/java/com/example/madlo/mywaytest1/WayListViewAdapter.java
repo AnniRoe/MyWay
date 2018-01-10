@@ -41,18 +41,16 @@ public class WayListViewAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        View vi =convertView;
-        if (convertView==null){
+        View vi = convertView;
+        if (convertView == null) {
 
-            vi = layoutInflater.inflate(R.layout.way_list_item,null);
-            TextView textView =(TextView)vi.findViewById(R.id.textView_date_transport);
+            vi = layoutInflater.inflate(R.layout.way_list_item, null);
+            TextView textView = (TextView) vi.findViewById(R.id.textView_date_transport);
             textView.setText(waysList2.get(position).getDate() + "\n" + waysList2.get(position).getTransport());
 
         }
         return vi;
     }
-
-
 
 
     // Konstruktor bekommt später beim erstellen der Klasse die Wegliste vom Typ
@@ -62,9 +60,7 @@ public class WayListViewAdapter extends BaseAdapter {
     public WayListViewAdapter(Context context, List<Ways> waysList) {
 
         waysList2 = waysList;
-        layoutInflater=LayoutInflater.from(context);
-
-
+        layoutInflater = LayoutInflater.from(context);
 
 
     }

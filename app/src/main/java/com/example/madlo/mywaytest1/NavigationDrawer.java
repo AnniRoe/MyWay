@@ -70,7 +70,6 @@ public class NavigationDrawer extends AppCompatActivity
     private TextView resultTextView;
     private View startTrackingButton;
     private View stopTrackingButton;
-    //TODO: Buttons einfügen und verknüpfen
     private View saveTrackingButton;
     private View showTrackingListButton;
 
@@ -120,6 +119,7 @@ public class NavigationDrawer extends AppCompatActivity
         startTrackingButton = findViewById(R.id.button_start_tracking);
         stopTrackingButton = findViewById(R.id.button_stop_tracking);
         saveTrackingButton = findViewById(R.id.button_Save);
+        showTrackingListButton = findViewById(R.id.button_showList);
 
 
         //Start Tracking Button ist nur sichtbar wenn nicht gerade getrackt wird
@@ -142,11 +142,20 @@ public class NavigationDrawer extends AppCompatActivity
 
             }
         });
-
+//TODO:SPEICHERN MIT DIALOG
         //SaveTrackingButton speichert das letzte Tracking nur nach beenden eines Trackings sichtbar
         saveTrackingButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 TrackingEnded();
+
+            }
+        });
+
+        showTrackingListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(NavigationDrawer.this, ListActivity.class);
+                startActivity(intent);
 
             }
         });
@@ -212,13 +221,15 @@ public class NavigationDrawer extends AppCompatActivity
         polylineHandler.post(polylineRunnable);
     }
 
-
+    @SuppressLint("MissingPermissions")
     // internet: http://www.trivisonno.com/programming/update-android-gui-timer
     final Runnable polylineRunnable = new Runnable() {
         @Override
         public void run() {
             // aktuelle location holen
             // Rot-Unterstrichenes geht trotzdem
+            //TODO: VOR ABGABE ENTFERNEN
+            @SuppressLint("MissingPermission")
             Task task = mFusedLocationClient.getLastLocation();
             task.addOnSuccessListener(new OnSuccessListener<Location>() {
                 @Override
@@ -514,6 +525,7 @@ public class NavigationDrawer extends AppCompatActivity
         ways.setDate(date);
         ways.setTrackingNumber(trackNumber);
 
+        //TODO: Rausfinden warum doppeltgespeichert wird
         //Erzeugtes User-Objekt der User Liste in der User Data Klasse hinzufuegen mittels eigenerstellter Methode
         WayData.getInstance().addWayToList(ways);
 

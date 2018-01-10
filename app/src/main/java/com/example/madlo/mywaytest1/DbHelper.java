@@ -17,7 +17,8 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(DbContract.SQL_CREATE_WAY_TABLE);
 
     }
-//TODO: USERDATA ERZEUGEN UND IN WAYDATA UMSCHREIBEN
+
+    //TODO: USERDATA ERZEUGEN UND IN WAYDATA UMSCHREIBEN
     //Diese Funktion soll die die gespeicherten Wege aus der Datenbank auslesen und in die Liste der Wege der Klasse UserData
     //hinzufuegen
     public void loadWays() {
@@ -31,10 +32,10 @@ public class DbHelper extends SQLiteOpenHelper {
 
         //rawQuery-Methode um einen Cursor auf die Ergebnisliste zu erhalten , als Parameter kriegt
         //er den zuvor definierten selectQuery-String uebergeben
-        Cursor cursor =db.rawQuery(selectQuery, null);
+        Cursor cursor = db.rawQuery(selectQuery, null);
 
 
-        if(cursor.moveToFirst()) {
+        if (cursor.moveToFirst()) {
             do {
                 //cursor zeigt auf einen eintrag der ergebnisliste
                 //Auslesen der werte aus den spalten
@@ -79,7 +80,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     //Funktion - Soll beim hinzufuegen eines Nutzers nicht nur in einer Nutzerliste sondern
     //persistent in der Tabelle der Datenbank gespeichert werden
-    public void saveWay (Ways ways) {
+    public void saveWay(Ways ways) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -90,7 +91,7 @@ public class DbHelper extends SQLiteOpenHelper {
         valuesWays.put(DbContract.WayTable.COLUMN_NAME_DATE, ways.getDate());
         valuesWays.put(DbContract.WayTable.COLUMN_NAME_TRACKNUMBER, ways.getTrackingNumber());
 
-        db.insert(DbContract.WayTable.TABLE_NAME,null, valuesWays);
+        db.insert(DbContract.WayTable.TABLE_NAME, null, valuesWays);
         db.close();
     }
 
@@ -103,6 +104,7 @@ public class DbHelper extends SQLiteOpenHelper {
         super(context, "user_db", null, 1); //Context ist der Variablen-Bezeichner des Parameters
 
     }
+
     public static DbHelper getInstance(Context context) {
         if (instance == null) {
             instance = new DbHelper(context);

@@ -42,7 +42,7 @@ public class ListActivity extends AppCompatActivity {
         wayListViewAdapter = new WayListViewAdapter(this, WayData.getInstance().getWaysList());
 
         //ERZEUGT DIE LISTENANSICHT
-        //TODO:ListViewContentMain in unseren Ressourcen Pendant finden und abgleichen
+
         ListView listView = (ListView) findViewById(R.id.listViewWays);
         listView.setAdapter(wayListViewAdapter);
 
@@ -58,8 +58,6 @@ public class ListActivity extends AppCompatActivity {
 
                 intent.putExtra("POSITION", position);
                 startActivity(intent);
-
-
 
 
             }

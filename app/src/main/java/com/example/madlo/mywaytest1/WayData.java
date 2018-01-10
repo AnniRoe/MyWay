@@ -2,6 +2,7 @@ package com.example.madlo.mywaytest1;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  * Created by madlo on 10.01.2018.
  */

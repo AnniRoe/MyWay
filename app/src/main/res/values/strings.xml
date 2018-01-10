@@ -28,6 +28,8 @@
     <string name="date">Datum: </string>
     <string name="track_number">Trackingnummer: </string>
     <string name="title_activity_list">ListActivity</string>
+    <string name="save">Speichern ?</string>
+    <string name="show_list">Liste</string>
 
 
 </resources>
