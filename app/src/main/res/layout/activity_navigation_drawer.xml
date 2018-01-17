@@ -84,12 +84,15 @@
             android:id="@+id/button_Save"
             android:layout_width="65dp"
             android:layout_height="65dp"
-            android:layout_above="@+id/button_start_tracking"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="9dp"
-            android:background="@mipmap/save_button"
+            android:layout_alignParentBottom="true"
 
-            android:visibility="gone" />
+            android:layout_marginLeft="19dp"
+            android:layout_marginStart="19dp"
+            android:layout_toEndOf="@+id/button_stop_tracking"
+            android:layout_toRightOf="@+id/button_stop_tracking"
+            android:background="@mipmap/save_button"
+            android:onClick="dialogevent"
+            android:visibility="visible" />
 
         <Button
             android:id="@+id/button_showList"

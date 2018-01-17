@@ -1,6 +1,7 @@
 package com.example.madlo.mywaytest1;
 
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,20 +39,41 @@ public class WayListViewAdapter extends BaseAdapter {
         return position;
     }
 
+    public void addItem(final Ways item) {
+        waysList2.add(item);
+        notifyDataSetChanged();
+    }
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        View vi = convertView;
+//HIER ENTSTEHT PROBLEM MIT KOMISCHEN LISTENEINTRÄGEN
+        //View vi = convertView;
+        //HATTEN WIR NICHT
+        ViewHolder holder = null;
         if (convertView == null) {
+//HATTEN WIR
+            convertView = layoutInflater.inflate(R.layout.way_list_item, null);
+            //HATTEN WIR NICHT
+            holder = new ViewHolder();
+            //HATTEN WIR
+            //TextView textView = (TextView) vi.findViewById(R.id.textView_date_transport);
+//HATTEN WIR NICHT
+            holder.textView = (TextView) convertView.findViewById(R.id.textView_date_transport);
 
-            vi = layoutInflater.inflate(R.layout.way_list_item, null);
-            TextView textView = (TextView) vi.findViewById(R.id.textView_date_transport);
-            textView.setText(waysList2.get(position).getDate() + "\n" + waysList2.get(position).getTransport());
+            //textView.setText(waysList2.get(position).getDate() + "\n" +
 
+            convertView.setTag(holder);
+//HATTEN WIR NICHT
+        } else {
+            holder = (ViewHolder)convertView.getTag();
         }
-        return vi;
-    }
+        //HATTEN WIR NICHT
+        holder.textView.setText(waysList2.get(position).getDate() + "\n" + waysList2.get(position).getTransport());
+        return convertView;
 
+    }
+    public static class ViewHolder {
+        public TextView textView;
+    }
 
     // Konstruktor bekommt später beim erstellen der Klasse die Wegliste vom Typ
     //ArrayList<Ways> übergeben und dann dem entsprechenden Member in der WayListAdapter
@@ -60,7 +82,8 @@ public class WayListViewAdapter extends BaseAdapter {
     public WayListViewAdapter(Context context, List<Ways> waysList) {
 
         waysList2 = waysList;
-        layoutInflater = LayoutInflater.from(context);
+        layoutInflater =  (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //layoutInflater = LayoutInflater.from(context);
 
 
     }

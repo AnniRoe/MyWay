@@ -1,5 +1,6 @@
 package com.example.madlo.mywaytest1;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,6 +20,7 @@ public class ListActivity extends AppCompatActivity {
         //Folgendes muss immer weit oben in der Methode stehen damit die Methode
         // quasi den Aufbau weiss
         setContentView(R.layout.activity_list);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         //Funktionsaufruf aus DBHelper heraus
         DbHelper.getInstance(ListActivity.this).loadWays();

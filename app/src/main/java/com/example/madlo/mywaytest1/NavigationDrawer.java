@@ -24,6 +24,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -85,7 +86,7 @@ public class NavigationDrawer extends AppCompatActivity
     private String convertedTime;
     private double distance;
 
-//TODO: BUTTONS MIT HÖHERER AUFLÖSUNG VERWENDEN
+    //TODO: BUTTONS MIT HÖHERER AUFLÖSUNG VERWENDEN
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,10 +151,17 @@ public class NavigationDrawer extends AppCompatActivity
 
             }
         });
+
+
+
+
+
+
+
 //TODO:SPEICHERN MIT DIALOG Versuch auskommentiert weil app stoppt und ploetzlich bei VerkehrsmittelwahlActivity weiter geht
-        //SaveTrackingButton speichert das letzte Tracking nur nach beenden eines Trackings sichtbar
-        saveTrackingButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+    //SaveTrackingButton speichert das letzte Tracking nur nach beenden eines Trackings sichtbar
+    //saveTrackingButton.setOnClickListener(new View.OnClickListener() {
+    //    public void onClick (View v){
 
 //                //https://stackoverflow.com/questions/2478517/how-to-display-a-yes-no-dialog-box-on-android
 //                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
@@ -176,30 +184,57 @@ public class NavigationDrawer extends AppCompatActivity
 //                builder.setMessage("Tracking speichern").setPositiveButton("Ja", dialogClickListener).setNegativeButton("Nein", dialogClickListener).show();
 //
 
-                TrackingEnded();
+    //TrackingEnded();
 
-            }
-        });
+    //      }
+    //   });
 
         showTrackingListButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(NavigationDrawer.this, ListActivity.class);
-                startActivity(intent);
+        @Override
+        public void onClick (View view){
+        Intent intent = new Intent(NavigationDrawer.this, ListActivity.class);
+        startActivity(intent);
 
-            }
-        });
+    }
+    });
 
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
+    mGoogleApiClient =new GoogleApiClient.Builder(this)
+            .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
 
-        // Wird benutzt um regelmäßig die letzte bekannte Location abzufragen (siehe:
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+    // Wird benutzt um regelmäßig die letzte bekannte Location abzufragen (siehe:
+    mFusedLocationClient =LocationServices.getFusedLocationProviderClient(this);
 
-    }
+}
+
+public void dialogevent(View view) {
+
+        saveTrackingButton = findViewById(R.id.button_Save);
+        saveTrackingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder saveDial = new AlertDialog.Builder(NavigationDrawer.this);
+                saveDial.setMessage("Möchten Sie ihr Tracking speichern?").setCancelable(false)
+                        .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                finish();
+
+                            }
+                        }).setNegativeButton("Nein", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+                AlertDialog alert = saveDial.create();
+                alert.setTitle("SPEICHERN");
+                alert.show();
+            }
+
+        });}
 
 
     private void startTracking() {
@@ -414,17 +449,17 @@ public class NavigationDrawer extends AppCompatActivity
         //TODO: Toast mit Hinweis dass Navigation-Drawer-Symbol nicht geht erscheint nicht
         // Wenn der Drawer wieder funktioniert, die folgenden Zeilen wieder aufnehmen
 
-//        if (id == R.id.nav_position) {
-//
-//        } else if (id == R.id.nav_means_of_transport) {
-//
-//        } else if (id == R.id.nav_tracks) {
-//
-//        }
+        if (id == R.id.nav_tracks) {
+
+            Intent intent = new Intent(NavigationDrawer.this, ListActivity.class);
+            startActivity(intent);
+        }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+
     }
 
 
@@ -558,7 +593,7 @@ public class NavigationDrawer extends AppCompatActivity
 
         //TODO: Rausfinden warum doppeltgespeichert wird
         //Erzeugtes User-Objekt der User Liste in der User Data Klasse hinzufuegen mittels eigenerstellter Methode
-        WayData.getInstance().addWayToList(ways);
+        //WayData.getInstance().addWayToList(ways);
 
         DbHelper.getInstance(NavigationDrawer.this).saveWay(ways);
 
