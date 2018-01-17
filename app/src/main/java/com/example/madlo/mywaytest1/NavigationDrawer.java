@@ -216,6 +216,7 @@ public void dialogevent(View view) {
             @Override
             public void onClick(View v) {
                 AlertDialog.Builder saveDial = new AlertDialog.Builder(NavigationDrawer.this);
+
                 saveDial.setMessage("Möchten Sie ihr Tracking speichern?").setCancelable(false)
                         .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                             @Override

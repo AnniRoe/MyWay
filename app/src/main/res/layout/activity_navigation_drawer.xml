@@ -92,7 +92,7 @@
             android:layout_toRightOf="@+id/button_stop_tracking"
             android:background="@mipmap/save_button"
             android:onClick="dialogevent"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/button_showList"
