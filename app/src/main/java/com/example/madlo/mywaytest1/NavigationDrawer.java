@@ -220,7 +220,8 @@ public void dialogevent(View view) {
                         .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                finish();
+                                TrackingEnded();
+
 
                             }
                         }).setNegativeButton("Nein", new DialogInterface.OnClickListener() {
