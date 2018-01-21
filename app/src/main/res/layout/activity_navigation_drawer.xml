@@ -82,12 +82,12 @@
 
         <Button
             android:id="@+id/button_Save"
-            android:layout_width="65dp"
-            android:layout_height="65dp"
+            android:layout_width="68dp"
+            android:layout_height="68dp"
             android:layout_alignParentBottom="true"
 
-            android:layout_marginLeft="19dp"
-            android:layout_marginStart="19dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:layout_toEndOf="@+id/button_stop_tracking"
             android:layout_toRightOf="@+id/button_stop_tracking"
             android:background="@mipmap/save_button"
@@ -96,7 +96,7 @@
 
         <Button
             android:id="@+id/button_showList"
-            android:layout_width="65dp"
+            android:layout_width="75dp"
             android:layout_height="65dp"
             android:background="@mipmap/trackings_button"
             android:layout_marginLeft="305dp"
