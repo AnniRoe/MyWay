@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -215,7 +216,8 @@ public void dialogevent(View view) {
         saveTrackingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder saveDial = new AlertDialog.Builder(NavigationDrawer.this);
+                AlertDialog.Builder saveDial = new AlertDialog.Builder(NavigationDrawer.this, R.style.MyDialog);
+
 
                 saveDial.setMessage("Möchten Sie ihr Tracking speichern?").setCancelable(false)
                         .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
@@ -232,7 +234,6 @@ public void dialogevent(View view) {
                     }
                 });
                 AlertDialog alert = saveDial.create();
-                alert.setTitle("SPEICHERN");
                 alert.show();
             }
 

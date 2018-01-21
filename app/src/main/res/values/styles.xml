@@ -9,6 +9,13 @@
         <item name="colorAccent">@color/colorSecondary</item>
     </style>
 
+    <style name="MyDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/colorPrimaryDark</item>
+        <item name="android:gravity">center</item>
+    </style>
+
     <style name="MyWay1.NoActionBar">
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">true</item>
