@@ -43,34 +43,31 @@ public class WayListViewAdapter extends BaseAdapter {
         waysList2.add(item);
         notifyDataSetChanged();
     }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-//HIER ENTSTEHT PROBLEM MIT KOMISCHEN LISTENEINTRÄGEN
-        //View vi = convertView;
-        //HATTEN WIR NICHT
+
+        //HIER ENTSTEHT PROBLEM MIT KOMISCHEN LISTENEINTRÄGEN
+
         ViewHolder holder = null;
         if (convertView == null) {
-//HATTEN WIR
             convertView = layoutInflater.inflate(R.layout.way_list_item, null);
             //HATTEN WIR NICHT
             holder = new ViewHolder();
-            //HATTEN WIR
-            //TextView textView = (TextView) vi.findViewById(R.id.textView_date_transport);
-//HATTEN WIR NICHT
+
+
             holder.textView = (TextView) convertView.findViewById(R.id.textView_date_transport);
 
-            //textView.setText(waysList2.get(position).getDate() + "\n" +
-
             convertView.setTag(holder);
-//HATTEN WIR NICHT
+
         } else {
-            holder = (ViewHolder)convertView.getTag();
+            holder = (ViewHolder) convertView.getTag();
         }
-        //HATTEN WIR NICHT
         holder.textView.setText(waysList2.get(position).getDate() + "\n" + waysList2.get(position).getTransport());
         return convertView;
 
     }
+
     public static class ViewHolder {
         public TextView textView;
     }
@@ -82,8 +79,7 @@ public class WayListViewAdapter extends BaseAdapter {
     public WayListViewAdapter(Context context, List<Ways> waysList) {
 
         waysList2 = waysList;
-        layoutInflater =  (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        //layoutInflater = LayoutInflater.from(context);
+        layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 
     }

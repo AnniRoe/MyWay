@@ -87,7 +87,7 @@ public class NavigationDrawer extends AppCompatActivity
     private String convertedTime;
     private double distance;
 
-    //TODO: BUTTONS MIT HÖHERER AUFLÖSUNG VERWENDEN
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,17 +109,6 @@ public class NavigationDrawer extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //TODO: NUR WENN TRANSPORTCHOICE NOCH LEER IST SOLL TOAST KOMMEN - SOLL VERHINDERN DASS TOAST NACH VERKEHRSMITTELWAHL NOCHEINMAL KOMMT
-        //if (transportChoice.isEmpty()) {
-
-        //Toast der auf Standortfreigabe hinweist
-        final Context context = getApplicationContext();
-        CharSequence text = "Bitte stellen Sie sicher, dass Sie die Standortfreigabe für diese App unter 'Einstellungen' > 'Apps' aktiviert haben";
-        int duration = Toast.LENGTH_LONG;
-
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-        //}
 
         resultTextView = (TextView) findViewById(R.id.text_view_tracking_result);
 
@@ -133,7 +122,6 @@ public class NavigationDrawer extends AppCompatActivity
         //Start Tracking Button ist nur sichtbar wenn nicht gerade getrackt wird
         startTrackingButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //TODO: HOLT SICH HIER SCHON TRANSPORT CHOICE BEVOR WIEDER GELÖSCHT WIRD
                 transportChoice = ""; // Alte transportChoice wieder entfernen
                 Intent intent = new Intent(NavigationDrawer.this, TransportSelectActivity.class);
                 startActivity(intent);
@@ -154,63 +142,27 @@ public class NavigationDrawer extends AppCompatActivity
         });
 
 
-
-
-
-
-
-//TODO:SPEICHERN MIT DIALOG Versuch auskommentiert weil app stoppt und ploetzlich bei VerkehrsmittelwahlActivity weiter geht
-    //SaveTrackingButton speichert das letzte Tracking nur nach beenden eines Trackings sichtbar
-    //saveTrackingButton.setOnClickListener(new View.OnClickListener() {
-    //    public void onClick (View v){
-
-//                //https://stackoverflow.com/questions/2478517/how-to-display-a-yes-no-dialog-box-on-android
-//                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog, int which) {
-//                        switch (which){
-//                            case DialogInterface.BUTTON_POSITIVE:
-//                                //Yes button clicked
-//                                TrackingEnded();
-//                                break;
-//
-//                            case DialogInterface.BUTTON_NEGATIVE:
-//                                //No button clicked
-//                                break;
-//                        }
-//                    }
-//                };
-//
-//                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-//                builder.setMessage("Tracking speichern").setPositiveButton("Ja", dialogClickListener).setNegativeButton("Nein", dialogClickListener).show();
-//
-
-    //TrackingEnded();
-
-    //      }
-    //   });
-
         showTrackingListButton.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick (View view){
-        Intent intent = new Intent(NavigationDrawer.this, ListActivity.class);
-        startActivity(intent);
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(NavigationDrawer.this, ListActivity.class);
+                startActivity(intent);
 
-    }
-    });
+            }
+        });
 
-    mGoogleApiClient =new GoogleApiClient.Builder(this)
-            .addConnectionCallbacks(this)
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
 
-    // Wird benutzt um regelmäßig die letzte bekannte Location abzufragen (siehe:
-    mFusedLocationClient =LocationServices.getFusedLocationProviderClient(this);
+        // Wird benutzt um regelmäßig die letzte bekannte Location abzufragen (siehe:
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-}
+    }
 
-public void dialogevent(View view) {
+    public void dialogevent(View view) {
 
         saveTrackingButton = findViewById(R.id.button_Save);
         saveTrackingButton.setOnClickListener(new View.OnClickListener() {
@@ -237,7 +189,8 @@ public void dialogevent(View view) {
                 alert.show();
             }
 
-        });}
+        });
+    }
 
 
     private void startTracking() {
@@ -281,7 +234,7 @@ public void dialogevent(View view) {
         };
 
         //nach 0,5s starten und alle 5 sekunden abfragen
-        timer.schedule(timerTask, 500, 5000); //
+        timer.schedule(timerTask, 500, 5000);
     }
 
 
@@ -296,7 +249,7 @@ public void dialogevent(View view) {
         public void run() {
             // aktuelle location holen
             // Rot-Unterstrichenes geht trotzdem
-            //TODO: VOR ABGABE ENTFERNEN
+
             @SuppressLint("MissingPermission")
             Task task = mFusedLocationClient.getLastLocation();
             task.addOnSuccessListener(new OnSuccessListener<Location>() {
@@ -350,9 +303,6 @@ public void dialogevent(View view) {
         String distanceString = "Distanz (Meter): " + String.format(Locale.GERMAN, "%.2f", distance);
 
         String resultViewText = this.transportChoice + "\n" + durationText + "\n" + distanceString;
-
-        //TODO: transportChoice wird hier gelöscht und ist deswegen in TrackingEnded-Methode nicht mehr verfügbar
-        //this.transportChoice = ""; // Alte transportChoice wieder entfernen
 
         //Zeigt eine Auswertung der getrackten Strecke
         resultTextView.setText(resultViewText);
@@ -450,7 +400,7 @@ public void dialogevent(View view) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         //TODO: Toast mit Hinweis dass Navigation-Drawer-Symbol nicht geht erscheint nicht
-        // Wenn der Drawer wieder funktioniert, die folgenden Zeilen wieder aufnehmen
+
 
         if (id == R.id.nav_tracks) {
 
@@ -471,6 +421,9 @@ public void dialogevent(View view) {
         super.onResume();
         mGoogleApiClient.connect();
 
+
+
+
         // Übergebene Daten, die vom Intent kommen
         // Hier werden nur Daten von "TransportSelectActivity" angenommen wegen Schlagwort transport
         Bundle parameters = getIntent().getExtras();
@@ -480,7 +433,17 @@ public void dialogevent(View view) {
                 this.transportChoice = transportChoice;
             }
         }
+        if (transportChoice.isEmpty()) {
 
+
+            //Toast der auf Standortfreigabe hinweist
+            final Context context = getApplicationContext();
+            CharSequence text = "Bitte stellen Sie sicher, dass Sie die Standortfreigabe für diese App unter 'Einstellungen' > 'Apps' aktiviert haben";
+            int duration = Toast.LENGTH_LONG;
+
+            Toast toast = Toast.makeText(context, text, duration);
+            toast.show();
+        }
 
     }
 
@@ -568,6 +531,11 @@ public void dialogevent(View view) {
         }
     }
 
+    /*
+    *
+    * Zum Speichern eines Trackings nach Beenden des jeweiligen Trackings
+    *
+    */
     public void TrackingEnded() {
 
         //Auslesen der Werte aus den Widgets
@@ -583,9 +551,8 @@ public void dialogevent(View view) {
         String trackNumber = date + System.currentTimeMillis();
 
         //WERTE EINTRAGEN
-        //String tracknumber = DATE+UHRZEIT;
 
-        //Neues User-Objekt erzeugen
+        //Neues Ways-Objekt erzeugen
         Ways ways = new Ways();
 
         ways.setTransport(transportChoice);
@@ -595,17 +562,16 @@ public void dialogevent(View view) {
         ways.setTrackingNumber(trackNumber);
 
         //TODO: Rausfinden warum doppeltgespeichert wird
-        //Erzeugtes User-Objekt der User Liste in der User Data Klasse hinzufuegen mittels eigenerstellter Methode
+        //Erzeugtes Ways-Objekt der Ways Liste in der  WayData Klasse hinzufuegen mittels eigenerstellter Methode
         //WayData.getInstance().addWayToList(ways);
 
         DbHelper.getInstance(NavigationDrawer.this).saveWay(ways);
 
         //Naechste Zeilen benoetigt man für den Toast
-        Log.i("TAG", "Nutzer wurde hinzugefügt");
+        Log.i("TAG", "Weg wurde hinzugefügt");
         Toast.makeText(NavigationDrawer.this, "Weg wurde hinzugefügt", Toast.LENGTH_SHORT).show();
 
 
-        //finish();
     }
 
 }

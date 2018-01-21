@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * Created by madlo on 29.11.2017.
+ * Created by madlo on 10.01.2018.
  */
 
 public class DbHelper extends SQLiteOpenHelper {
@@ -54,7 +54,7 @@ public class DbHelper extends SQLiteOpenHelper {
                 //Neues Ways Objekt erstellen
                 Ways ways = new Ways();
 
-                //Werte des User-Objekts werden auf die ausgelesenen Werte gesetzt
+                //Werte des Ways-Objekts werden auf die ausgelesenen Werte gesetzt
                 ways.setTransport(transport);
                 ways.setDuration(duration);
                 ways.setDistance(distance);
@@ -78,7 +78,7 @@ public class DbHelper extends SQLiteOpenHelper {
 
     }
 
-    //Funktion - Soll beim hinzufuegen eines Nutzers nicht nur in einer Nutzerliste sondern
+    //Funktion - Soll beim hinzufuegen eines Weges nicht nur in einer Nutzerliste sondern
     //persistent in der Tabelle der Datenbank gespeichert werden
     public void saveWay(Ways ways) {
 
@@ -96,7 +96,7 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
 
-    //Erzeuge eine (versteckte) Klassenvariable vom Typ der eigenen Klasse (also UserData)
+    //Erzeuge eine (versteckte) Klassenvariable vom Typ der eigenen Klasse (also WayData)
     private static DbHelper instance;
 
     private DbHelper(Context context) {

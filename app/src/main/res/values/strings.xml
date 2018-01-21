@@ -13,7 +13,7 @@
     <string name="start_tracking">Tracking starten</string>
     <string name="stop_tracking">Tracking beenden</string>
     <string name="nav_position">Position</string>
-    <string name="nav_means_of_transport">Means of Transport</string>
+    <string name="nav_means_of_transport">Verkehrsmittel</string>
     <string name="nav_tracks">Tracks</string>
     <string name="track_act">TRACKING AKTIV</string>
     <string name="tracking_active">TRACKING IST AKTIV</string>
@@ -27,7 +27,7 @@
     <string name="distance">Distanz: </string>
     <string name="date">Datum: </string>
     <string name="track_number">Trackingnummer: </string>
-    <string name="title_activity_list">ListActivity</string>
+    <string name="title_activity_list">GESPEICHERTE TRACKINGS</string>
     <string name="save">Speichern ?</string>
     <string name="show_list">Liste</string>
 

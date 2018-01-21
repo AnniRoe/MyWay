@@ -13,7 +13,8 @@ import android.widget.ListView;
 
 public class ListActivity extends AppCompatActivity {
     WayListViewAdapter wayListViewAdapter;
-//TODO: neustes ganz oben anzeigen https://stackoverflow.com/questions/9987402/is-it-possible-to-make-a-listview-populate-from-the-bottom versucht aber keine ahnung wegen chaos
+
+    //TODO: neustes ganz oben anzeigen https://stackoverflow.com/questions/9987402/is-it-possible-to-make-a-listview-populate-from-the-bottom versucht aber keine ahnung wegen chaos
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
